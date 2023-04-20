@@ -57,7 +57,7 @@ jobs:
       - name: Build, test and publish Rust package
         uses: rcook/rust-package-action@v0.0.1
         with:
-          target: ${{ matrix.target }}
+          target: x86_64-unknown-linux-gnu
           publish: true
         env:
           RUST_PACKAGE_ACTION_CRATES_IO_API_TOKEN: ${{ secrets.CRATES_IO_API_TOKEN }}
