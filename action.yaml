@@ -68,4 +68,4 @@ runs:
       if: ${{ inputs.publish == 'true' }}
       shell: bash
       run: |
-        echo PUBLISH_TO_CRATES_IO
+        $CARGO publish --dry-run
