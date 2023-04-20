@@ -71,4 +71,6 @@ runs:
       if: ${{ inputs.publish == 'true' }}
       shell: bash
       run: |
-        $CARGO publish --dry-run
+        $CARGO publish --token $RUST_PACKAGE_ACTION_CRATES_IO_API_TOKEN $TARGET_ARGS
+      env:
+        RUST_PACKAGE_ACTION_CRATES_IO_API_TOKEN: ${{ env.RUST_PACKAGE_ACTION_CRATES_IO_API_TOKEN }}
