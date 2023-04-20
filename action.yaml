@@ -21,7 +21,11 @@ runs:
       run: |
         echo 'CARGO_TERM_COLOR=always' >> $GITHUB_ENV
         echo 'CARGO=cargo' >> $GITHUB_ENV
-        echo "TOOLCHAIN=$(cat rust-toolchain)" >> $GITHUB_ENV
+        if [ -f rust-toolchain ]; then
+          echo "TOOLCHAIN=$(cat rust-toolchain)" >> $GITHUB_ENV
+        else
+          echo 'TOOLCHAIN=' >> $GITHUB_ENV
+        fi
         echo 'TARGET=${{ matrix.target }}' >> $GITHUB_ENV
         echo 'TARGET_ARGS=--target ${{ matrix.target }}' >> $GITHUB_ENV
 
