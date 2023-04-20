@@ -53,10 +53,6 @@ on:
 jobs:
   publish:
     runs-on: ubuntu-latest
-    env:
-      CARGO: cargo
-      CARGO_TERM_COLOR: always
-      TARGET_ARGS: --target x86_64-unknown-linux-gnu
     steps:
       - name: Build, test and publish Rust package
         uses: rcook/rust-package-action@v0.0.1
