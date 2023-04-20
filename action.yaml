@@ -1,0 +1,71 @@
+name: Rust package
+description: Build, test and publish a Rust package
+inputs:
+  target:
+    description: Target triplet
+    type: string
+    required: true
+  publish:
+    description: Publish to crates.io
+    type: boolean
+    required: false
+    default: false
+runs:
+  using: composite
+  steps:
+    - name: Check out
+      uses: actions/checkout@v3
+
+    - name: Set up environment
+      shell: bash
+      run: |
+        # Variables
+        echo 'CARGO_TERM_COLOR=always' >> $GITHUB_ENV
+        echo 'CARGO=cargo' >> $GITHUB_ENV
+        echo "TOOLCHAIN=$(cat rust-toolchain)" >> $GITHUB_ENV
+        echo 'TARGET=${{ matrix.target }}' >> $GITHUB_ENV
+        echo 'TARGET_ARGS=--target ${{ matrix.target }}' >> $GITHUB_ENV
+
+    - name: Set up toolchain
+      if: ${{ env.TOOLCHAIN != '' }}
+      shell: bash
+      run: |
+        rustup toolchain install $TOOLCHAIN-$TARGET
+        rustup component add clippy --toolchain $TOOLCHAIN-$TARGET
+        rustup component add rustfmt --toolchain $TOOLCHAIN-$TARGET
+
+    - name: Build debug
+      shell: bash
+      run: |
+        $CARGO build --verbose $TARGET_ARGS
+
+    - name: Test debug
+      shell: bash
+      run: |
+        $CARGO test --verbose $TARGET_ARGS
+
+    - name: Build release
+      shell: bash
+      run: |
+        $CARGO build --verbose --release $TARGET_ARGS
+
+    - name: Test release
+      shell: bash
+      run: |
+        $CARGO test --verbose --release $TARGET_ARGS
+
+    - name: Run Clippy
+      shell: bash
+      run: |
+        $CARGO clippy $TARGET_ARGS
+
+    - name: Run formatter
+      shell: bash
+      run: |
+        $CARGO fmt --check
+
+    - name: Publish to crates.io
+      if: ${{ inputs.publish == 'true' }}
+      shell: bash
+      run: |
+        echo PUBLISH_TO_CRATES_IO
