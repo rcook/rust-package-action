@@ -19,7 +19,6 @@ runs:
     - name: Set up environment
       shell: bash
       run: |
-        # Variables
         echo 'CARGO_TERM_COLOR=always' >> $GITHUB_ENV
         echo 'CARGO=cargo' >> $GITHUB_ENV
         echo "TOOLCHAIN=$(cat rust-toolchain)" >> $GITHUB_ENV
