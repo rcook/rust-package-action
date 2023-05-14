@@ -42,22 +42,22 @@ runs:
     - name: Build debug
       shell: bash
       run: |
-        $CARGO build --verbose $TARGET_ARGS
+        $CARGO build --verbose $TARGET_ARGS --all-features
 
     - name: Test debug
       shell: bash
       run: |
-        $CARGO test --verbose $TARGET_ARGS
+        $CARGO test --verbose $TARGET_ARGS --all-features
 
     - name: Build release
       shell: bash
       run: |
-        $CARGO build --verbose --release $TARGET_ARGS
+        $CARGO build --verbose --release $TARGET_ARGS --all-features
 
     - name: Test release
       shell: bash
       run: |
-        $CARGO test --verbose --release $TARGET_ARGS
+        $CARGO test --verbose --release $TARGET_ARGS --all-features
 
     - name: Run Clippy
       shell: bash
