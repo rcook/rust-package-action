@@ -35,6 +35,7 @@ runs:
       if: ${{ env.TOOLCHAIN != '' }}
       shell: bash
       run: |
+        rustup target add $TARGET
         rustup toolchain install $TOOLCHAIN-$TARGET
         rustup component add clippy --toolchain $TOOLCHAIN-$TARGET
         rustup component add rustfmt --toolchain $TOOLCHAIN-$TARGET
